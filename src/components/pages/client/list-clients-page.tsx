@@ -1,10 +1,11 @@
 import { TableOrganism } from "@/components/organisms/table-organism";
 import { ListEntityTemplate } from "@/components/templates/list-entity-template";
 import { getAllClients } from "@/services/clients/clients";
-import { Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Client } from "../../../shared/interfaces";
 import { useRouter } from "next/router";
+import { ButtonMolecule } from "@/components/molecules/button-molecule";
+import { Flex } from "@chakra-ui/react";
 
 export const ListClientsPage = () => {
   const [clients, setClients] = useState([] as Client[]);
@@ -28,15 +29,21 @@ export const ListClientsPage = () => {
     router.push(`/${router.pathname}/edit/${id}`);
   };
 
+  const redirectToNewClient = () => {
+    router.push(`/${router.pathname}/create`);
+  };
+
   return (
     <ListEntityTemplate
       entityCreationComponent={
-        <Flex
-          width={"100vw"}
-          height={"100vh"}
-          alignContent={"center"}
-          justifyContent={"center"}
-        >
+        <>
+          <Flex
+            float={"inline-end"}
+            mt={"2"}
+            onClick={() => redirectToNewClient()}
+          >
+            <ButtonMolecule name="criar cliente" text="Cadastrar cliente" />
+          </Flex>
           <TableOrganism
             onRowClick={onRowClick}
             columns={[
@@ -47,7 +54,7 @@ export const ListClientsPage = () => {
             ]}
             data={clients}
           />
-        </Flex>
+        </>
       }
     />
   );

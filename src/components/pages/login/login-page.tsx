@@ -13,6 +13,8 @@ import { IconAtom } from "@/components/atoms/icon-atom";
 import { FaUser } from "react-icons/fa";
 import { PiPassword } from "react-icons/pi";
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 export const LoginPage = () => {
   const [showPassword, setPassword] = useState(false);
 
@@ -23,6 +25,8 @@ export const LoginPage = () => {
     if (response.status === 200) {
       setCookie("access-token", response.data, { sameSite: true });
       router.push(`/client`);
+    } else {
+      toast.error(response.data);
     }
   };
 
